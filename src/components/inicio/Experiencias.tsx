@@ -30,7 +30,7 @@ export default function Experiencias() {
     ];
 
     return (
-        <section className="py-12 sm:py-16 bg-white w-full">
+        <section className="py-12 sm:py-16 bg-gray-100">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-10">
                     Vacaciones de Lujo, Opciones Exclusivas en las Mejores Ciudades
