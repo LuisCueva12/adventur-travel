@@ -57,10 +57,10 @@ export default function DestinosRecomendados() {
                     <span
                         key={i}
                         className={`text-lg ${i < fullStars
+                            ? 'text-yellow-400'
+                            : i === fullStars && hasHalfStar
                                 ? 'text-yellow-400'
-                                : i === fullStars && hasHalfStar
-                                    ? 'text-yellow-400'
-                                    : 'text-gray-300'
+                                : 'text-gray-300'
                             }`}
                     >
                         ★
@@ -74,9 +74,6 @@ export default function DestinosRecomendados() {
     return (
         <div className="py-12 sm:py-16 bg-white w-full">
             {/* Elementos decorativos de fondo */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full opacity-50 transform -translate-x-16 -translate-y-16"></div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-100 rounded-full opacity-30 transform translate-x-24 translate-y-24"></div>
-
             <div className="max-w-6xl mx-auto relative z-10">
                 <div className="text-center mb-12">
                     <span className="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-700 font-medium text-sm mb-4">
