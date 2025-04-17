@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Hoteles from "@/components/inicio/Hoteles"
 import Hero from "@/components/inicio/Hero";
 import Confianza from "@/components/inicio/Confianza"
+import Experiencias from "@/components/inicio/Experiencias";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -22,6 +23,7 @@ export default function Inicio() {
       <Hero/>
       <Hoteles/>
       <Confianza/>
+      <Experiencias/>
       <Footer/>
     </main>
   );

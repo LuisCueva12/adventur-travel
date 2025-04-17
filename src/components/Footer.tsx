@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
     return (
@@ -7,15 +8,15 @@ export default function Footer() {
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     {/* Logo y descripción */}
                     <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 shadow-md">
-                                <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 10L12 2L21 10V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V10Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M9 22V12H15V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight">Aventuras</span>
-                        </div>
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src="/images/logo-1.png"
+                            alt="Vacaciones en EAU"
+                            width={120}
+                            height={60}
+                            className="mr-4"
+                        />
+                    </Link>
 
                         <p className="text-sm leading-6 text-cyan-100">
                             Descubre los alojamientos más auténticos para vivir aventuras inolvidables en plena naturaleza.
