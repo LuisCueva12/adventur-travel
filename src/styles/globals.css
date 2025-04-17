@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #222;
+  }
+  :root {
+    --font-xs: 0.75em;
+    --font-sm: 0.875em;
+    --font-base: 1em;
+    --font-md: 1.125em;
+    --font-lg: 1.25em;
+    --font-xl: 1.5em;
+    --font-2xl: 1.875em;
+    --font-3xl: 2.25em;
+  }
+  
