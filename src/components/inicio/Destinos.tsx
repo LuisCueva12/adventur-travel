@@ -34,9 +34,9 @@ export default function DestinosRecomendados() {
     ];
 
     const estadisticas = [
-        { valor: '25K+', texto: 'Viajeros satisfechos', icono: '👨‍👩‍👧‍👦' },
-        { valor: '50+', texto: 'Alojamientos únicos', icono: '🏨' },
-        { valor: '15+', texto: 'Años de experiencia', icono: '⏱️' }
+        { valor: '1K+', texto: 'Viajeros satisfechos', icono: '👨‍👩‍👧‍👦' },
+        { valor: '30+', texto: 'Alojamientos únicos', icono: '🏨' },
+        { valor: '2+', texto: 'Años de experiencia', icono: '⏱️' }
     ];
 
     // Auto-cambio de destino cada 5 segundos
