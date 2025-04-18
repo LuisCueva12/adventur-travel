@@ -2,8 +2,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Hoteles from "@/components/inicio/Hoteles"
 import Hero from "@/components/inicio/Hero";
-import Confianza from "@/components/inicio/Confianza"
-import Experiencias from "@/components/inicio/Experiencias";
+import Confianza from "@/components/inicio/Destinos"
+import Experiencias from "@/components/inicio/Galeria";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({

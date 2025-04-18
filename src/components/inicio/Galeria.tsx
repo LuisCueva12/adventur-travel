@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Experiencias() {
+export default function Galeria() {
     const destinations = [
         {
             id: 1,
