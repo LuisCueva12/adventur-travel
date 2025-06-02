@@ -1,104 +1,119 @@
+import { FiPhone, FiMapPin, FiMail } from 'react-icons/fi';
+
 export default function Contacto() {
+  // Función para manejar el envío del formulario
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e);
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+
+    const response = await fetch('/api/enviarCorreo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+        alert('Mensaje enviado correctamente');
+    } else {
+        alert('Hubo un error al enviar el mensaje');
+    }
+};
   return (
-    <section className="py-12 sm:py-16 bg-gray-100">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white shadow-md rounded-lg p-6">
-        {/* Sección izquierda: Información de contacto */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Contáctenos:</h2>
-          <p className="text-gray-700">
-            Nuestra dirección postal es:
+    <section className="py-16 bg-gradient-to-b from-gray-100 to-white">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-xl rounded-2xl p-10">
+        
+        {/* Izquierda */}
+        <div className="flex flex-col justify-center space-y-6">
+          <h2 className="text-4xl font-bold text-gray-800 flex items-center gap-3">
+            <FiMail className="text-yellow-500" /> Contáctanos
+          </h2>
+          <p className="text-gray-600 text-lg">
+            ¿Tienes preguntas o deseas más información? ¡Estamos aquí para ayudarte!
           </p>
-          <p className="text-gray-700 font-semibold">
-            Jr. 5 esquinas 723 piso 2
-          </p>
-          <p className="text-gray-700 mt-2">Teléfono: <span className="font-semibold">+51 958 101 721</span></p>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 text-gray-700">
+              <FiMapPin className="text-yellow-500" />
+              Jr. 5 esquinas 723 piso 2
+            </div>
+            <div className="flex items-center gap-3 text-gray-700">
+              <FiPhone className="text-yellow-500" />
+              +51 958 101 721
+            </div>
+          </div>
         </div>
 
-        {/* Sección derecha: Formulario */}
-        <div>
-          <p className="text-base text-gray-800 mb-4">
-            Déjenos saber sus consultas llenando el formulario
-          </p>
-          <form method="POST" className="flex flex-col gap-4">
-            {/* Campo: Nombre */}
+        {/* Derecha */}
+        <div className="bg-gray-50 rounded-2xl p-8">
+          <form onSubmit={handleSubmit} method="POST" className="flex flex-col gap-6">
             <div>
-              <label
-                htmlFor="nombre"
-                className="block text-sm font-semibold text-gray-700"
-              >
+              <label htmlFor="nombre" className="block text-sm font-semibold text-gray-700 mb-1">
                 Nombre:
               </label>
               <input
                 type="text"
                 id="nombre"
                 name="nombre"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-yellow-500"
+                className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Ingresa tu nombre"
                 required
               />
             </div>
 
-            {/* Campo: Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-700"
-              >
-                Ingresa tu e-mail:
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">
+                E-mail:
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-yellow-500"
+                className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="example@email.com"
                 required
               />
             </div>
-
-            {/* Campo: Celular */}
+            
             <div>
-              <label
-                htmlFor="celular"
-                className="block text-sm font-semibold text-gray-700"
-              >
+              <label htmlFor="celular" className="block text-sm font-semibold text-gray-700 mb-1">
                 Celular:
               </label>
               <input
                 type="tel"
                 id="celular"
                 name="celular"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-yellow-500"
+                pattern="[0-9]{9}"
+                title="Debe tener 9 dígitos"
+                className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 placeholder="Ingresa tu número"
+                required
               />
             </div>
-
-            {/* Campo: Mensaje */}
+            
             <div>
-              <label
-                htmlFor="mensaje"
-                className="block text-sm font-semibold text-gray-700"
-              >
+              <label htmlFor="mensaje" className="block text-sm font-semibold text-gray-700 mb-1">
                 Mensaje:
               </label>
               <textarea
                 id="mensaje"
                 name="mensaje"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-yellow-500"
-                placeholder="Escribe aquí tu mensaje"
+                rows={4}
+                className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                placeholder="Escribe tu mensaje aquí"
                 required
               ></textarea>
             </div>
-
-            {/* Botón de Enviar */}
+            
             <button
               type="submit"
-              className="w-full bg-yellow-500 text-white font-bold py-2 rounded-lg hover:bg-yellow-600 transition duration-300"
+              className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-bold py-3 rounded-lg hover:scale-105 hover:shadow-lg transition-transform duration-300"
             >
-              Enviar
+              Enviar mensaje
             </button>
           </form>
         </div>
+
       </div>
     </section>
   );
