@@ -5,6 +5,8 @@ import Hero from "@/components/inicio/Hero";
 import Confianza from "@/components/inicio/Destinos"
 import Experiencias from "@/components/inicio/Galeria";
 import { Geist, Geist_Mono } from "next/font/google";
+import Contacto from "@/components/inicio/Contacto";
+import Galeriaad from "@/components/inicio/Galeriaad";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +26,8 @@ export default function Inicio() {
       <Hoteles/>
       <Confianza/>
       <Experiencias/>
+      <Galeriaad/>
+      <Contacto/>
       <Footer/>
     </main>
   );
