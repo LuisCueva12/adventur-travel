@@ -1,146 +1,66 @@
-import React from 'react';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Galeria() {
-    const destinations = [
-        {
-            id: 1,
-            name: 'PLAYA DE TULUM',
-            image: '/images/destinations/tulum-beach.png',
-        },
-        {
-            id: 2,
-            name: 'ASPEN DOWN',
-            image: '/images/destinations/aspen-down.png',
-        },
-        {
-            id: 3,
-            name: 'VISTA LACANDONA',
-            image: '/images/destinations/lacando-vista.png',
-        },
-        {
-            id: 4,
-            name: 'VALLE DEL EDÉN',
-            image: '/images/destinations/eden-valley.png',
-        },
-        {
-            id: 5,
-            name: 'CUEVAS ALPINAS',
-            image: '/images/destinations/alps-caves.png',
-        },
-    ];
+  const habitaciones = [
+    { id: 1, nombre: "Habitación Simple", imagen: "/images/habitaciones/habitacion1.jpg", precio: "S/ 120", etiqueta: "Económica" },
+    { id: 2, nombre: "Habitación Doble", imagen: "/images/habitaciones/habitacion2.jpg", precio: "S/ 180", etiqueta: "Ideal en pareja" },
+    { id: 3, nombre: "Habitación Triple", imagen: "/images/habitaciones/habitacion3.jpg", precio: "S/ 220", etiqueta: "Familiar" },
+    { id: 4, nombre: "Habitación Familiar", imagen: "/images/habitaciones/habitacion4.jpg", precio: "S/ 300", etiqueta: "Popular" },
+    { id: 5, nombre: "Suite Ejecutiva", imagen: "/images/habitaciones/habitacion5.jpg", precio: "S/ 350", etiqueta: "Business" },
+    { id: 6, nombre: "Suite Presidencial", imagen: "/images/habitaciones/habitacion6.jpg", precio: "S/ 500", etiqueta: "Lujo" },
+  ];
 
-    return (
-        <section className="py-12 sm:py-16 bg-gray-100">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-10">
-                    Opciones Exclusivas en las Mejores Ciudades
-                </h2>
+  return (
+    <section id="galeria" className="pt-28 pb-12 sm:pb-16 bg-gradient-to-b from-gray-50 to-gray-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        {/* Título con animación */}
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-center text-[#0F3057] mb-12"
+        >
+           Nuestras Habitaciones 
+        </motion.h2>
 
-                {/* Grid para escritorio */}
-                <div className="hidden lg:grid grid-cols-4 grid-rows-2 gap-6 w-full h-[600px]">
-                    {/* Imagen 1: Grande, ocupa 2 columnas y 2 filas */}
-                    <div className="col-span-2 row-span-2 relative group h-full">
-                        <img
-                            src={destinations[0].image}
-                            alt={`Destino ${destinations[0].name}`}
-                            className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                            loading="lazy"
-                        />
-                        <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            {destinations[0].name}
-                        </span>
-                    </div>
+        {/* Grid moderno */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {habitaciones.map((hab, index) => (
+            <motion.div
+              key={hab.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition"
+            >
+              {/* Imagen */}
+              <Image
+                src={hab.imagen}
+                alt={hab.nombre}
+                width={500}
+                height={300}
+                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
 
-                    {/* Imagen 2: Grande, ocupa 2 columnas y 1 fila */}
-                    <div className="col-span-2 row-span-1 relative group h-full">
-                        <img
-                            src={destinations[1].image}
-                            alt={`Destino ${destinations[1].name}`}
-                            className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                            loading="lazy"
-                        />
-                        <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            {destinations[1].name}
-                        </span>
-                    </div>
+              {/* Capa oscura en hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-4">
+                <h3 className="text-white font-bold text-lg">{hab.nombre}</h3>
+                <span className="text-[#FFD700] font-semibold">{hab.precio} / noche</span>
+              </div>
 
-                    {/* Contenedor para las 3 imágenes pequeñas */}
-                    <div className="col-span-2 row-span-1 grid grid-cols-3 gap-6 h-full">
-                        {/* Imagen 3 */}
-                        <div className="col-span-1 relative group h-full">
-                            <img
-                                src={destinations[2].image}
-                                alt={`Destino ${destinations[2].name}`}
-                                className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                                loading="lazy"
-                            />
-                            <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {destinations[2].name}
-                            </span>
-                        </div>
-
-                        {/* Imagen 4 */}
-                        <div className="col-span-1 relative group h-full">
-                            <img
-                                src={destinations[3].image}
-                                alt={`Destino ${destinations[3].name}`}
-                                className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                                loading="lazy"
-                            />
-                            <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {destinations[3].name}
-                            </span>
-                        </div>
-
-                        {/* Imagen 5 */}
-                        <div className="col-span-1 relative group h-full">
-                            <img
-                                src={destinations[4].image}
-                                alt={`Destino ${destinations[4].name}`}
-                                className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                                loading="lazy"
-                            />
-                            <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {destinations[4].name}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Grid para tabletas (2 columnas) */}
-                <div className="hidden sm:grid lg:hidden grid-cols-2 gap-6">
-                    {destinations.map((destination) => (
-                        <div key={destination.id} className="relative group h-48">
-                            <img
-                                src={destination.image}
-                                alt={`Destino ${destination.name}`}
-                                className="w-full h-full object-cover rounded-xl shadow-md transition-all duration-300 group-hover:opacity-80"
-                                loading="lazy"
-                            />
-                            <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {destination.name}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Grid para móviles (1 columna) */}
-                <div className="grid sm:hidden grid-cols-1 gap-6">
-                    {destinations.map((destination) => (
-                        <div key={destination.id} className="relative h-56">
-                            <img
-                                src={destination.image}
-                                alt={`Destino ${destination.name}`}
-                                className="w-full h-full object-cover rounded-xl shadow-md"
-                                loading="lazy"
-                            />
-                            <span className="absolute bottom-4 left-4 bg-white/90 text-gray-900 text-sm font-semibold px-3 py-1 rounded-lg uppercase">
-                                {destination.name}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
+              {/* Etiqueta */}
+              <span className="absolute top-3 left-3 bg-[#FFD700] text-black text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                {hab.etiqueta}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

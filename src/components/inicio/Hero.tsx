@@ -1,181 +1,127 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { FaBed, FaCoffee, FaParking, FaWifi, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Hero() {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
+  const beneficios = [
+    { icon: <FaBed size={28} />, texto: 'Habitaciones confortables' },
+    { icon: <FaCoffee size={28} />, texto: 'Desayuno incluido' },
+    { icon: <FaParking size={28} />, texto: 'Estacionamiento privado' },
+    { icon: <FaWifi size={28} />, texto: 'WiFi gratuito' },
+    { icon: <FaMapMarkerAlt size={28} />, texto: 'A 10 min del centro' },
+  ];
 
-    const slides = [
-        {
-            image: '/images/slider/hotel1.png',
-            alt: 'Horizonte de Dubái de noche',
-            title: 'Vive tus vacaciones en los EAU',
-            subtitle: 'Reserva online disponible 24/7',
-        },
-        {
-            image: '/images/slider/hotel2.png',
-            alt: 'Mezquita Sheikh Zayed en Abu Dhabi',
-            title: 'Descubre el lujo de oriente',
-            subtitle: 'Reservas exclusivas en los mejores hoteles',
-        },
-        {
-            image: '/images/slider/hotel1.png',
-            alt: 'Desierto de Dubái al atardecer',
-            title: 'Aventura en el desierto',
-            subtitle: 'Experiencias únicas en los Emiratos',
-        },
-    ];
-    
-    useEffect(() => {
-        if (isPaused) return;
-        const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 6000);
-        return () => clearInterval(interval);
-    }, [isPaused, slides.length]);
+  // Parallax
+  const [offsetY, setOffsetY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => setOffsetY(window.scrollY * 0.5);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    return (
-        <section
-            className="relative h-screen overflow-hidden"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            role="region"
-            aria-label="Carrusel principal"
+  // Typing effect
+  const frases = [
+    "Descansa, desconéctate y vive Cajamarca",
+    "Tu experiencia única en Hotel Recreo",
+    "Relájate en la comodidad que mereces"
+  ];
+  const [texto, setTexto] = useState("");
+  const [fraseIndex, setFraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    if (charIndex < frases[fraseIndex].length) {
+      const timeout = setTimeout(() => {
+        setTexto((prev) => prev + frases[fraseIndex][charIndex]);
+        setCharIndex(charIndex + 1);
+      }, 80);
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        setTexto("");
+        setCharIndex(0);
+        setFraseIndex((prev) => (prev + 1) % frases.length);
+      }, 2500);
+      return () => clearTimeout(timeout);
+    }
+  }, [charIndex, fraseIndex]);
+
+  return (
+    <section className="relative h-[90vh] w-full overflow-hidden text-white">
+      {/* Imagen de fondo con parallax */}
+      <div className="absolute inset-0" style={{ transform: `translateY(${offsetY}px)` }}>
+        <Image
+          src="/images/slider/hotel1.png"
+          alt="Hotel Recreo"
+          fill
+          className="object-cover brightness-[.45] shadow-md"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+      </div>
+
+      {/* Contenido */}
+      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
+        
+        {/* Título animado con typing */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-2xl mb-6"
         >
-            {/* Slides */}
-            <div className="relative h-full w-full">
-                {slides.map((slide, index) => (
-                    <div
-                        key={index}
-                        className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-                            index === currentSlide ? 'opacity-100' : 'opacity-0'
-                        }`}
-                        aria-hidden={index !== currentSlide}
-                    >
-                        <Image
-                            src={slide.image}
-                            alt={slide.alt}
-                            fill
-                            className="object-cover"
-                            priority
-                            quality={100}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
-                    </div>
-                ))}
-            </div>
+          {texto}<span className="animate-pulse">|</span>
+        </motion.h1>
 
-            {/* Contenido principal */}
-            <div className="absolute inset-0 flex flex-col justify-start md:justify-center items-center text-center px-4 z-20">
-                <div className="w-full max-w-6xl mx-auto mt-55 sm:mt-24 md:mt-0 min-h-fit">
-                    <div className="mb-8 text-white transition-all duration-700 transform px-4">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg animate-fade-in">
-                            {slides[currentSlide].title}
-                        </h1>
-                        <p className="text-lg sm:text-xl md:text-2xl mb-6 drop-shadow-md animate-fade-in">
-                            {slides[currentSlide].subtitle}
-                        </p>
-                    </div>
+        {/* Botón reservar con glow animado */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <Link
+            href="#reserva"
+            className="relative bg-[#556B2F] hover:bg-[#6d8435] text-white font-semibold px-10 py-3 rounded-full shadow-lg transition group"
+          >
+            <span className="relative z-10">Reservar Ahora</span>
+            <span className="absolute inset-0 rounded-full bg-[#6d8435] opacity-30 blur-lg animate-ping"></span>
+          </Link>
+        </motion.div>
 
-                    {/* Filtro de búsqueda */}
-                    <div className="bg-white bg-opacity-90 rounded-xl p-4 sm:p-6 shadow-2xl animate-fade-in-up w-full max-w-md sm:max-w-4xl mx-auto">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                            {/* Destino */}
-                            <div>
-                                <label className="block text-gray-700 text-sm font-semibold mb-1 text-left">
-                                    Destino
-                                </label>
-                                <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm">
-                                    <option value="">Todos los destinos</option>
-                                    <option value="dubai">Dubái</option>
-                                    <option value="abu-dhabi">Abu Dhabi</option>
-                                    <option value="sharjah">Sharjah</option>
-                                    <option value="ras-al-khaimah">Ras Al Khaimah</option>
-                                </select>
-                            </div>
-
-                            {/* Fechas */}
-                            <div>
-                                <label className="block text-gray-700 text-sm font-semibold mb-1 text-left">
-                                    Fechas
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="Selecciona fechas"
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm"
-                                    onFocus={(e) => (e.target.type = 'date')}
-                                />
-                            </div>
-
-                            {/* Tipo de viaje */}
-                            <div>
-                                <label className="block text-gray-700 text-sm font-semibold mb-1 text-left">
-                                    Tipo de viaje
-                                </label>
-                                <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm">
-                                    <option value="">Todos los tipos</option>
-                                    <option value="playa">Playa</option>
-                                    <option value="aventura">Aventura</option>
-                                    <option value="cultural">Cultural</option>
-                                    <option value="lujo">Lujo</option>
-                                </select>
-                            </div>
-
-                            {/* Botón de búsqueda */}
-                            <div className="flex items-end">
-                                <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 text-sm">
-                                    Buscar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Navegación de puntitos */}
-            <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 z-20">
-                {slides.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === currentSlide ? 'bg-yellow-500 scale-125' : 'bg-white/50 hover:bg-white/80'
-                        }`}
-                        aria-label={`Ir a slide ${index + 1}`}
-                        aria-current={index === currentSlide ? 'true' : 'false'}
-                    />
-                ))}
-            </div>
-
-            {/* Animaciones */}
-            <style jsx>{`
-                @keyframes fade-in {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                @keyframes fade-in-up {
-                    from {
-                        opacity: 0;
-                        transform: translateY(40px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                .animate-fade-in {
-                    animation: fade-in 0.7s ease-out;
-                }
-                .animate-fade-in-up {
-                    animation: fade-in-up 0.9s ease-out;
-                }
-            `}</style>
-        </section>
-    );
+        {/* Beneficios con animación */}
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.2 } }
+          }}
+          className="mt-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 w-full max-w-6xl px-4"
+        >
+          {beneficios.map((item, index) => (
+            <motion.div
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { opacity: 1, y: 0 }
+              }}
+              whileHover={{ scale: 1.1, rotate: 2 }}
+              className="flex flex-col items-center text-center gap-2 group"
+            >
+              <div className="text-[#F5F5DC] group-hover:text-yellow-300 transition">
+                {item.icon}
+              </div>
+              <span className="text-sm md:text-base font-bold text-white group-hover:text-yellow-300 transition">
+                {item.texto}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
 }
